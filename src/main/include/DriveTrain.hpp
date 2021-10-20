@@ -5,7 +5,6 @@
 #include <ctre/Phoenix.h>
 #include <frc/Solenoid.h>
 
-
 #include <Transmission.hpp>
 
 namespace DRIVETRAIN {
@@ -65,5 +64,5 @@ private:
     frc::Solenoid shifter{DRIVETRAIN::SOLENOID::PORT};
 
     bool shift_status = DRIVETRAIN::SOLENOID::DEFAULT;
-    bool can_shift = false;
+    bool can_shift = true;
 };
