@@ -5,8 +5,7 @@
 
 namespace BUTTON
 {
-    inline frc::Joystick ps5leftJoy { 0 },
-        ps5rightJoy{ 1 };
+    inline frc::Joystick ps5 { 0 };
   /*      oStick { 1 };
     namespace INTAKE
     {
