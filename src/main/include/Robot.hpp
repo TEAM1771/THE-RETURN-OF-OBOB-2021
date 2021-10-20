@@ -5,8 +5,13 @@
 #pragma once
 
 #include <frc/TimedRobot.h>
+#include "Constants.hpp"
+#include "DriveTrain.hpp"
 
 class Robot : public frc::TimedRobot {
+DriveTrain driveTrain = DriveTrain();
+
+
  public:
   void RobotInit() override;
   void RobotPeriodic() override;
