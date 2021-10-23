@@ -23,7 +23,7 @@ void Robot::TestPeriodic()
   double const left = BUTTON::ps5.GetY();
   double const right = -BUTTON::ps5.GetTwist();
   
-  driveTrain.tank(left, right);
+  driveTrain.tank(left / .3, right / .3);
 }
 
 #ifndef RUNNING_FRC_TESTS
