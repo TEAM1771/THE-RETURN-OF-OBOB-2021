@@ -6,10 +6,10 @@ DriveTrain::DriveTrain(){
     shifter.Set(DRIVETRAIN::SOLENOID::DEFAULT);
 }
 
-void DriveTrain::update() {
-    std::cout << "Left Pos: " << ltrm->GetSelectedSensorPosition() << "  |  Right Pos: " << rtrm->GetSelectedSensorPosition();
-    std::cout << "  ---  Left Vel: " << ltrm->GetSelectedSensorVelocity() << "  |  Right Vel: " << rtrm->GetSelectedSensorVelocity() << "\n";
-}
+// void DriveTrain::update() {
+//     std::cout << "Left Pos: " << ltrm->GetSelectedSensorPosition() << "  |  Right Pos: " << rtrm->GetSelectedSensorPosition();
+//     std::cout << "  ---  Left Vel: " << ltrm->GetSelectedSensorVelocity() << "  |  Right Vel: " << rtrm->GetSelectedSensorVelocity() << "\n";
+// }
 
 void DriveTrain::canShift(bool shiftability){
     can_shift = shiftability;
@@ -17,11 +17,15 @@ void DriveTrain::canShift(bool shiftability){
 }
 
 void DriveTrain::tank(double lrate, double rrate) {
-    ltrm->Set(ControlMode::PercentOutput, lrate);
-    rtrm->Set(ControlMode::PercentOutput, rrate);
+    l1.Set(ControlMode::PercentOutput, lrate);
+    l2.Set(ControlMode::PercentOutput, lrate);
+    r1.Set(ControlMode::PercentOutput, -rrate);
+    r2.Set(ControlMode::PercentOutput, -rrate);
+    
+
 
     if(can_shift){
-        double const avgVelocity = fabs(ltrm->GetSelectedSensorVelocity()+rtrm->GetSelectedSensorVelocity())/2.0;
+        double const avgVelocity = fabs(l1.GetSelectedSensorVelocity()+l2.GetSelectedSensorVelocity())/2.0;
         if(shift_status == DRIVETRAIN::SOLENOID::SHIFT_DOWN && fabs(avgVelocity) >= DRIVETRAIN::SOLENOID::SHIFT_UP_SPEED)
             shift(DRIVETRAIN::SOLENOID::SHIFT_UP);
         else if(shift_status == DRIVETRAIN::SOLENOID::SHIFT_UP && fabs(avgVelocity) <= DRIVETRAIN::SOLENOID::SHIFT_DOWN_SPEED)
