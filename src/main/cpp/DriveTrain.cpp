@@ -25,7 +25,7 @@ void DriveTrain::tank(double lrate, double rrate) {
 
 
     if(can_shift){
-        double const avgVelocity = fabs(l1.GetSelectedSensorVelocity()+l2.GetSelectedSensorVelocity())/2.0;
+        double const avgVelocity = fabs(l1.GetSelectedSensorVelocity()+r1.GetSelectedSensorVelocity())/2.0;
         if(shift_status == DRIVETRAIN::SOLENOID::SHIFT_DOWN && fabs(avgVelocity) >= DRIVETRAIN::SOLENOID::SHIFT_UP_SPEED)
             shift(DRIVETRAIN::SOLENOID::SHIFT_UP);
         else if(shift_status == DRIVETRAIN::SOLENOID::SHIFT_UP && fabs(avgVelocity) <= DRIVETRAIN::SOLENOID::SHIFT_DOWN_SPEED)
