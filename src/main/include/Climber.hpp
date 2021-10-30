@@ -9,5 +9,6 @@ namespace Climber
     void set(CLIMBER::POSITION position);
     void ButtonManager();
     void joystickControl(double);
+    void joystickControlNoLimits(double val);
     void printStatus();
 } // namespace Climber

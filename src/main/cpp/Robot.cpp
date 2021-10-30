@@ -5,15 +5,19 @@
 #include "Robot.hpp"
 #include <thread>
 #include "Constants.hpp"
+#include "Climber.hpp"
 
-void Robot::RobotInit() {}
+void Robot::RobotInit()
+{
+  Climber::init();
+}
 void Robot::RobotPeriodic() {}
 
 void Robot::AutonomousInit()
 {
-  driveTrain.tank(.5, .5);
+  driveTrain.tank(-.3, -.3);
   using namespace std::literals::chrono_literals;
-  std::this_thread::sleep_for(1s);
+  std::this_thread::sleep_for(8s);
   driveTrain.tank(0, 0);
 }
 void Robot::AutonomousPeriodic() {}
@@ -21,17 +25,34 @@ void Robot::AutonomousPeriodic() {}
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic()
 {
+  // if (BUTTON::CLIMBER::RAISE)
+  // {
+  //   Climber::joystickControl(BUTTON::JOY2.GetY());
+  // }
+  // else
+  // {
+  // Climber::joystickControl(0);
   double const left = BUTTON::JOY1.GetY();
   double const right = BUTTON::JOY2.GetY();
 
   driveTrain.tank(left, right);
+  //Climber::printStatus();
+  Climber::ButtonManager();
+  driveTrain.printVelocity();
+  // }
 }
 
 void Robot::DisabledInit() {}
-void Robot::DisabledPeriodic() {}
+void Robot::DisabledPeriodic()
+{
+  Climber::printStatus();
+}
 
 void Robot::TestInit() {}
-void Robot::TestPeriodic() {}
+void Robot::TestPeriodic()
+{
+  Climber::joystickControlNoLimits(BUTTON::JOY2.GetY());
+}
 
 #ifndef RUNNING_FRC_TESTS
 int main()

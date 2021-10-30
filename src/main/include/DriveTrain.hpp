@@ -33,8 +33,8 @@ namespace DRIVETRAIN {
         constexpr bool SHIFT_DOWN = !SHIFT_UP;
         constexpr bool DEFAULT = SHIFT_DOWN;
 
-        constexpr int SHIFT_UP_SPEED = 4500; // 2900 in 2016
-        constexpr int SHIFT_DOWN_SPEED = 3500; // 2200 in 2016
+        constexpr int SHIFT_UP_SPEED = 15000; // 2900 in 2016
+        constexpr int SHIFT_DOWN_SPEED = 14000; // 2200 in 2016
     }
 }
 
@@ -47,6 +47,8 @@ public:
     void shift();
 
     void canShift(bool status);
+
+    void printVelocity();
 
     void update();
 
@@ -72,5 +74,5 @@ private:
     frc::Solenoid shifter{DRIVETRAIN::SOLENOID::PORT};
 
     bool shift_status = DRIVETRAIN::SOLENOID::DEFAULT;
-    bool can_shift = false;
+    bool can_shift = true;
 };

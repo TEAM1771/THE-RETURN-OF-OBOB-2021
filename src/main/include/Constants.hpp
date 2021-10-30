@@ -11,8 +11,8 @@ namespace BUTTON
 
     namespace CLIMBER
     {
-        inline JoystickButton RAISE{BUTTON::JOY1, 12};
-        inline JoystickButton LOWER{BUTTON::JOY1, 11};
+        inline JoystickButton RAISE{BUTTON::JOY2, 11};
+        inline JoystickButton LOWER{BUTTON::JOY1, 6};
     }
 
     // namespace DRIVETRAIN
@@ -23,7 +23,7 @@ namespace BUTTON
 } // namespace BUTTON
 namespace CLIMBER
 {
-    constexpr int PORT_1 = 9;
+    constexpr int PORT_1 = 17;
 
     constexpr auto IDLE_MODE = rev::CANSparkMax::IdleMode::kBrake;
 
@@ -35,8 +35,8 @@ namespace CLIMBER
 
     typedef enum
     {
-        DOWN = 100,
-        UP = 802,
+        DOWN = -153,
+        UP = -1111,
         ZERO = 0
     } POSITION;
 
