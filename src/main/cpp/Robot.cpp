@@ -17,7 +17,7 @@ void Robot::AutonomousInit()
 {
   driveTrain.tank(-.3, -.3);
   using namespace std::literals::chrono_literals;
-  std::this_thread::sleep_for(8s);
+  std::this_thread::sleep_for(6s);
   driveTrain.tank(0, 0);
 }
 void Robot::AutonomousPeriodic() {}

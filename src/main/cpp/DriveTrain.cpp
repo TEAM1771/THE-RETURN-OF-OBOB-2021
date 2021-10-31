@@ -12,7 +12,7 @@ DriveTrain::DriveTrain(){
 // }
 
 void DriveTrain::printVelocity() {
-    std::cout << "Avg Vel: " << (fabs(l1.GetSelectedSensorVelocity() + r2.GetSelectedSensorVelocity())) / 2 << "\n";
+    std::cout << "Avg Vel: " << fabs((l1.GetSelectedSensorVelocity()-r1.GetSelectedSensorVelocity())/2.0) << "\n";
 
 }
 
@@ -30,10 +30,10 @@ void DriveTrain::tank(double lrate, double rrate) {
 
 
     if(can_shift){
-        double const avgVelocity = fabs((l1.GetSelectedSensorVelocity()+r1.GetSelectedSensorVelocity())/2.0);
-        if(shift_status == DRIVETRAIN::SOLENOID::SHIFT_DOWN && fabs(avgVelocity) >= DRIVETRAIN::SOLENOID::SHIFT_UP_SPEED)
+        double const avgVelocity = fabs((l1.GetSelectedSensorVelocity()-r1.GetSelectedSensorVelocity())/2.0);
+        if(shift_status == DRIVETRAIN::SOLENOID::SHIFT_DOWN && avgVelocity >= DRIVETRAIN::SOLENOID::SHIFT_UP_SPEED)
             shift(DRIVETRAIN::SOLENOID::SHIFT_UP);
-        else if(shift_status == DRIVETRAIN::SOLENOID::SHIFT_UP && fabs(avgVelocity) <= DRIVETRAIN::SOLENOID::SHIFT_DOWN_SPEED)
+        else if(shift_status == DRIVETRAIN::SOLENOID::SHIFT_UP && avgVelocity <= DRIVETRAIN::SOLENOID::SHIFT_DOWN_SPEED)
             shift(DRIVETRAIN::SOLENOID::SHIFT_DOWN);
     }
 }
