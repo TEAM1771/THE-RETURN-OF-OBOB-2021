@@ -3,11 +3,15 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-
 #include <frc/TimedRobot.h>
+#include "DriveTrain.hpp"
 
-class Robot : public frc::TimedRobot {
- public:
+class Robot : public frc::TimedRobot
+{
+
+  DriveTrain driveTrain = DriveTrain();
+
+public:
   void RobotInit() override;
   void RobotPeriodic() override;
 
