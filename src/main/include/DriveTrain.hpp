@@ -13,5 +13,5 @@ namespace DriveTrain
 
     void canShift(bool status);
 
-    void printVelocity();
+    void printStatus();
 } // namespace DriveTrain

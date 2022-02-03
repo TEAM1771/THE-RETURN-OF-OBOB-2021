@@ -1,7 +1,7 @@
 #include <DriveTrain.hpp>
 
-#include <frc/PowerDistributionPanel.h>
 #include <frc/Solenoid.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include <ctre/Phoenix.h>
 
@@ -27,15 +27,17 @@ namespace SOLENOID
     constexpr bool SHIFT_DOWN = !SHIFT_UP;
     constexpr bool DEFAULT = SHIFT_DOWN;
 
-    constexpr int SHIFT_UP_SPEED = 15000;   // 2900 in 2016
-    constexpr int SHIFT_DOWN_SPEED = 14000; // 2200 in 2016
+    constexpr int SHIFT_UP_VOLTAGE = 8;
+    constexpr int SHIFT_DOWN_VOLTAGE = 2;
+
+    constexpr int SHIFT_UP_CURRENT = 2;
+    constexpr int SHIFT_DOWN_CURRENT = 20;
+
 } // namespace SOLENOID
 
 /******************************************************************/
 /*                        Private Variables                       */
 /******************************************************************/
-
-frc::PowerDistributionPanel PDH{};
 
 std::unique_ptr<WPI_TalonSRX> fl, fr, bl, br;
 
@@ -61,9 +63,14 @@ void configTalon(std::unique_ptr<WPI_TalonSRX> &talon_srx, can_adr const &port)
     talon_srx->ConfigAllSettings(talon_config);
 }
 
-[[nodiscard]] double getVelocity()
+[[nodiscard]] double getVoltage()
 {
-    return fabs((fl->GetSelectedSensorVelocity() - fr->GetSelectedSensorVelocity()) / 2.0);
+    return fabs((fl->GetMotorOutputVoltage() - fr->GetMotorOutputVoltage()) / 2.0);
+}
+
+[[nodiscard]] double getCurrent()
+{
+    return fabs((fl->GetStatorCurrent() - fr->GetStatorCurrent()) / 2.0);
 }
 
 /******************************************************************/
@@ -81,9 +88,13 @@ void DriveTrain::init()
     br = std::make_unique<WPI_TalonSRX>(BR_PORT);
 }
 
-void DriveTrain::printVelocity()
+void DriveTrain::printStatus()
 {
-    printf("Avg Vel: %f\n", getVelocity);
+    auto const volts = getVoltage();
+    auto const amps = getCurrent();
+    printf("Avg Voltage: %f, Avg Current: %f\n", volts, amps);
+    frc::SmartDashboard::PutNumber("Drivetrain Voltage", volts);
+    frc::SmartDashboard::PutNumber("Drivetrain Amperage", amps);
 }
 
 void DriveTrain::canShift(bool shiftability)
@@ -102,10 +113,11 @@ void DriveTrain::tank(double lrate, double rrate)
 
     if (can_shift)
     {
-        double const avgVelocity = getVelocity();
-        if (shift_status == SOLENOID::SHIFT_DOWN && avgVelocity >= SOLENOID::SHIFT_UP_SPEED)
+        double const avgVoltage = getVoltage();
+        double const avgCurrent = getCurrent();
+        if (shift_status == SOLENOID::SHIFT_DOWN && avgVoltage >= SOLENOID::SHIFT_UP_VOLTAGE && avgCurrent <= SOLENOID::SHIFT_UP_CURRENT)
             shift(SOLENOID::SHIFT_UP);
-        else if (shift_status == SOLENOID::SHIFT_UP && avgVelocity <= SOLENOID::SHIFT_DOWN_SPEED)
+        else if (shift_status == SOLENOID::SHIFT_UP && (avgCurrent >= SOLENOID::SHIFT_UP_CURRENT || avgVoltage <= SOLENOID::SHIFT_DOWN_VOLTAGE))
             shift(SOLENOID::SHIFT_DOWN);
     }
 }
