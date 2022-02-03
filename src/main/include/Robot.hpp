@@ -8,10 +8,10 @@
 
 class Robot : public frc::TimedRobot
 {
-
-  DriveTrain driveTrain = DriveTrain();
-
 public:
+/******************************************************************/
+/*                   Public Function Declarations                 */
+/******************************************************************/
   void RobotInit() override;
   void RobotPeriodic() override;
 

@@ -1,17 +1,19 @@
 #include "PID_CANSparkMax.hpp"
-#include "Constants.hpp"
+
+/******************************************************************/
+/*                   Public Function Definitions                  */
+/******************************************************************/
 
 PID_CANSparkMax::PID_CANSparkMax(int id, MotorType motor_type)
-    : rev::CANSparkMax(id, motor_type)
-    , pid_controller { rev::CANSparkMax::GetPIDController() }
-    , encoder { GetEncoder() }
+    : rev::CANSparkMax(id, motor_type), pid_controller{rev::CANSparkMax::GetPIDController()}, encoder{GetEncoder()}
 {
     pid_controller.SetFeedbackDevice(encoder);
 }
 
 void PID_CANSparkMax::Set(double value)
 {
-    if(ngr::value_in_range(encoder.GetPosition(), min_position, max_position))
+    auto position = encoder.GetPosition();
+    if (position > min_position && position < max_position)
         rev::CANSparkMax::Set(value);
     else
         rev::CANSparkMax::Set(0);
@@ -19,7 +21,8 @@ void PID_CANSparkMax::Set(double value)
 
 void PID_CANSparkMax::SetVoltage(units::volt_t value)
 {
-    if(ngr::value_in_range(encoder.GetPosition(), min_position, max_position))
+    auto position = encoder.GetPosition();
+    if (position > min_position && position < max_position)
         rev::CANSparkMax::SetVoltage(value);
     else
         rev::CANSparkMax::Set(0);
@@ -27,7 +30,7 @@ void PID_CANSparkMax::SetVoltage(units::volt_t value)
 
 void PID_CANSparkMax::SetOutputRange(double min, double max)
 {
-    if(min >= max)
+    if (min >= max)
         std::cerr << "Invalid Output Range: min: " << min << "\tmax: " << max << '\n';
     pid_controller.SetOutputRange(min, max);
 }

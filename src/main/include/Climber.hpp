@@ -1,8 +1,22 @@
 #pragma once
 
-#include "Constants.hpp"
-#include "PID_CANSparkMax.hpp"
+/******************************************************************/
+/*                        Public Constants                        */
+/******************************************************************/
+namespace CLIMBER
+{
+    typedef enum
+    {
+        DOWN = -153,
+        UP = -940,
+        ZERO = 0
+    } POSITION;
 
+} // namespace CLIMBER
+
+/******************************************************************/
+/*                  Public Function Declarations                  */
+/******************************************************************/
 namespace Climber
 {
     void init();

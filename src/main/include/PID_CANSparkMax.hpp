@@ -25,6 +25,9 @@
  */
 class PID_CANSparkMax : public rev::CANSparkMax
 {
+/******************************************************************/
+/*                        Private Variables                       */
+/******************************************************************/
 private:
     rev::CANPIDController pid_controller;
 
@@ -33,6 +36,9 @@ private:
 
     inline static rev::ControlType const default_control_type = rev::ControlType::kPosition;
 
+/******************************************************************/
+/*                  Public Function Declarations                  */
+/******************************************************************/
 public:
     rev::CANEncoder encoder;
     PID_CANSparkMax(int id, MotorType motor_type);

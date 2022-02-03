@@ -1,37 +1,47 @@
 #include "Climber.hpp"
-#include "Constants.hpp"
+#include "Buttons.hpp"
+#include "PID_CANSparkMax.hpp"
 
-//static (private) variables
-inline static PID_CANSparkMax climber{CLIMBER::PORT_1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-//inline static auto encoder = climber.GetEncoder();
+/******************************************************************/
+/*                       Private Constants                        */
+/******************************************************************/
 
-//function definitions
+constexpr int PORT = 17;
+
+constexpr auto IDLE_MODE = rev::CANSparkMax::IdleMode::kBrake;
+
+constexpr double P = 0.1771;
+constexpr double I = 0.0;
+constexpr double D = 0.0;
+
+constexpr double MAX_OUTPUT = 1;
+
+/******************************************************************/
+/*                        Private Variables                       */
+/******************************************************************/
+inline static PID_CANSparkMax climber{PORT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+
+/******************************************************************/
+/*                  Private Function Definitions                  */
+/******************************************************************/
 void Climber::init()
 {
     climber.RestoreFactoryDefaults();
 
-    climber.SetIdleMode(CLIMBER::IDLE_MODE);
+    climber.SetIdleMode(IDLE_MODE);
 
-    climber.SetP(CLIMBER::P);
-    climber.SetI(CLIMBER::I);
-    climber.SetD(CLIMBER::D);
-    // climber.SetOutputRange(-CLIMBER::MAX_OUTPUT, CLIMBER::MAX_OUTPUT);
+    climber.SetP(P);
+    climber.SetI(I);
+    climber.SetD(D);
+    // climber.SetOutputRange(-MAX_OUTPUT, MAX_OUTPUT);
     climber.SetPositionRange(-10000, 10);
     climber.SetTarget(CLIMBER::POSITION::ZERO);
     climber.SetSmartCurrentLimit(40);
-
-    //    climber_2.SetP(CLIMBER::P);
-    //    climber_2.SetI(CLIMBER::I);
-    //    climber_2.SetD(CLIMBER::D);
-    //    climber_2.SetOutputRange(-CLIMBER::MAX_OUTPUT, CLIMBER::MAX_OUTPUT);
-    //    climber_2.SetPositionRange(-CLIMBER::POSITION::UP, CLIMBER::POSITION::ZERO);
-    //    climber_2.SetTarget(CLIMBER::POSITION::ZERO);
 }
 
 void Climber::set(CLIMBER::POSITION position)
 {
     climber.SetTarget(position, rev::ControlType::kPosition);
-    //    climber_2.SetTarget(-position, rev::ControlType::kPosition);
 }
 
 void Climber::joystickControl(double val)
@@ -50,7 +60,6 @@ void Climber::joystickControl(double val)
     if (fabs(val) < .02)
         val = 0;
     climber.Set(val);
-    //    climber_2.Set(-val);
     printStatus();
 }
 
@@ -59,14 +68,12 @@ void Climber::joystickControlNoLimits(double val)
     if (fabs(val) < .02)
         val = 0;
     climber.Set(val);
-    //    climber_2.Set(-val);
     printStatus();
 }
 
 void Climber::printStatus()
 {
     std::cout << "Climber 1: " << climber.encoder.GetPosition() << std::endl;
-    //    std::cout << "Climber 2: " << climber_2.encoder.GetPosition() << std::endl;
 }
 
 void Climber::ButtonManager()

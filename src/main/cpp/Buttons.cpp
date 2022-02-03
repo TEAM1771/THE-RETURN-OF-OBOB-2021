@@ -1,6 +1,9 @@
-#include "JoystickButton.hpp"
+#include "Buttons.hpp"
 #include <iostream>
 
+/******************************************************************/
+/*                   Public Function Definitions                  */
+/******************************************************************/
 JoystickButton::JoystickButton(frc::GenericHID& stick, int const button)
     : stick_ { stick }
     , button_ { button }
