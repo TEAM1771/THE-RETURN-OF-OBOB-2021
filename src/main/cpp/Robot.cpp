@@ -13,16 +13,15 @@
 void Robot::RobotInit()
 {
   Climber::init();
-  DriveTrain::init();
 }
 void Robot::RobotPeriodic() {}
 
 void Robot::AutonomousInit()
 {
-  DriveTrain::tank(-.3, -.3);
+  drivetrain.tank(-.3, -.3);
   using namespace std::literals::chrono_literals;
   std::this_thread::sleep_for(6s);
-  DriveTrain::tank(0, 0);
+  drivetrain.tank(0, 0);
 }
 void Robot::AutonomousPeriodic() {}
 
@@ -36,10 +35,10 @@ void Robot::TeleopPeriodic()
   double const left = BUTTON::JOY1.GetY();
   double const right = BUTTON::JOY2.GetY();
 
-  DriveTrain::tank(left, right);
+  drivetrain.tank(left, right);
   //Climber::printStatus();
   Climber::ButtonManager();
-  DriveTrain::printVelocity();
+  drivetrain.printStatus();
 }
 
 void Robot::DisabledInit() {}
