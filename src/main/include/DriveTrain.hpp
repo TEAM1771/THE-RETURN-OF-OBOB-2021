@@ -31,16 +31,17 @@ private:
     /*                        Private Variables                       */
     /******************************************************************/
 
-    WPI_TalonSRX fl{0};
-    WPI_TalonSRX bl{0};
-    WPI_TalonSRX fr{0};
-    WPI_TalonSRX br{0};
+    WPI_TalonSRX fl{2};
+    WPI_TalonSRX bl{17};
+    WPI_TalonSRX fr{4};
+    WPI_TalonSRX br{5};
 
-    frc::Solenoid shifter{SOLENOID::PORT};
+    /* frc::Solenoid shifter{SOLENOID::PORT};
 
     bool shift_status = SOLENOID::DEFAULT;
 
-    bool can_shift = true;
+    bool can_shift = false;
+    */
 
 public:
     /******************************************************************/
@@ -50,8 +51,10 @@ public:
 
     void tank(double lrate, double rrate);
 
+    /*
     void shift(bool toshift);
     void shift();
+    */
 
     double getVoltage();
     double getCurrent();

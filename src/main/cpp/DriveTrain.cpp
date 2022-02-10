@@ -10,7 +10,7 @@
 
 Drivetrain::Drivetrain()
 {
-    shifter.Set(SOLENOID::DEFAULT);
+    // shifter.Set(SOLENOID::DEFAULT);
 
     auto const talon_config = []() {
         TalonSRXConfiguration talon_config;
@@ -25,12 +25,12 @@ Drivetrain::Drivetrain()
 
 [[nodiscard]] double Drivetrain::getVoltage()
 {
-    return fabs((fl.GetMotorOutputVoltage() - fr.GetMotorOutputVoltage()) / 2.0);
+    return std::abs((fl.GetMotorOutputVoltage() - fr.GetMotorOutputVoltage()) / 2.0);
 }
 
 [[nodiscard]] double Drivetrain::getCurrent()
 {
-    return fabs((fl.GetStatorCurrent() - fr.GetStatorCurrent()) / 2.0);
+    return std::abs((fl.GetStatorCurrent() - fr.GetStatorCurrent()) / 2.0);
 }
 
 void Drivetrain::printStatus()
@@ -50,6 +50,7 @@ void Drivetrain::tank(double lrate, double rrate)
     fr.Set(ControlMode::PercentOutput, -rrate);
     br.Set(ControlMode::PercentOutput, -rrate);
 
+/*
     if (can_shift)
     {
         double const avgVoltage = getVoltage();
@@ -58,12 +59,14 @@ void Drivetrain::tank(double lrate, double rrate)
             shift(SOLENOID::SHIFT_UP);
         else if (shift_status == SOLENOID::SHIFT_UP && (avgCurrent >= SOLENOID::SHIFT_UP_CURRENT || avgVoltage <= SOLENOID::SHIFT_DOWN_VOLTAGE))
             shift(SOLENOID::SHIFT_DOWN);
-    }
+            
+    } */
 }
 
+/*
 void Drivetrain::shift(bool up_or_down)
 {
-    shifter.Set(up_or_down);
+    // shifter.Set(up_or_down);
     shift_status = up_or_down;
     printf((up_or_down == SOLENOID::SHIFT_UP) ? ("Shift!\n") : ("Unshift!\n"));
 }
@@ -71,6 +74,7 @@ void Drivetrain::shift(bool up_or_down)
 void Drivetrain::shift()
 {
     shift_status = !shift_status;
-    shifter.Set(shift_status);
+    // shifter.Set(shift_status);
     printf((shift_status == SOLENOID::SHIFT_UP) ? ("Shift!\n") : ("Unshift!\n"));
 }
+*/

@@ -44,12 +44,13 @@ void Robot::TeleopPeriodic()
 void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic()
 {
-  Climber::printStatus();
+  // Climber::printStatus();
 }
 
 void Robot::TestInit() {}
 void Robot::TestPeriodic()
 {
+  Climber::printStatus();
   Climber::joystickControlNoLimits(BUTTON::JOY2.GetY());
 }
 

@@ -57,18 +57,16 @@ void Climber::joystickControl(double val)
         climber.Set(0);
         return;
     }
-    if (fabs(val) < .02)
+    if (std::abs(val) < .02)
         val = 0;
     climber.Set(val);
-    printStatus();
 }
 
 void Climber::joystickControlNoLimits(double val)
 {
-    if (fabs(val) < .02)
+    if (std::abs(val) < .02)
         val = 0;
     climber.Set(val);
-    printStatus();
 }
 
 void Climber::printStatus()
