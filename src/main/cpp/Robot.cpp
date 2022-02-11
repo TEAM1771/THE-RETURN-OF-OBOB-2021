@@ -38,7 +38,7 @@ void Robot::TeleopPeriodic()
   drivetrain.tank(left, right);
   //Climber::printStatus();
   Climber::ButtonManager();
-  drivetrain.printStatus();
+  // drivetrain.printStatus();
 }
 
 void Robot::DisabledInit() {}

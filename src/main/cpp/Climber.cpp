@@ -34,7 +34,7 @@ void Climber::init()
     climber.SetI(I);
     climber.SetD(D);
     // climber.SetOutputRange(-MAX_OUTPUT, MAX_OUTPUT);
-    climber.SetPositionRange(-10000, 10);
+    climber.SetPositionRange(CLIMBER::POSITION::UP, 100);
     climber.SetTarget(CLIMBER::POSITION::ZERO);
     climber.SetSmartCurrentLimit(40);
 }
@@ -76,8 +76,11 @@ void Climber::printStatus()
 
 void Climber::ButtonManager()
 {
-    if (BUTTON::CLIMBER::RAISE)
+    using namespace BUTTON::CLIMBER;
+    if (RAISE)
         set(CLIMBER::POSITION::UP);
-    else if (BUTTON::CLIMBER::LOWER)
+    else if (LOWER)
         set(CLIMBER::POSITION::DOWN);
+    else if (ZERO1 && ZERO2)
+        set(CLIMBER::POSITION::ZERO);
 }

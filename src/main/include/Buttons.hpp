@@ -32,5 +32,7 @@ namespace BUTTON
     {
         inline JoystickButton RAISE{BUTTON::JOY2, 11};
         inline JoystickButton LOWER{BUTTON::JOY1, 6};
+        inline JoystickButton ZERO1{BUTTON::JOY1, 8};
+        inline JoystickButton ZERO2{BUTTON::JOY1, 9};
     } // namespace CLIMBER
 } // namespace BUTTON

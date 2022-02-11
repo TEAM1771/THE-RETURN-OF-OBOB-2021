@@ -7,8 +7,8 @@ namespace CLIMBER
 {
     typedef enum
     {
-        DOWN = -153,
-        UP = -940,
+        DOWN = -163,
+        UP = -968,
         ZERO = 0
     } POSITION;
 
