@@ -5,14 +5,14 @@
 #include "Robot.hpp"
 #include <thread>
 #include "Buttons.hpp"
-#include "Climber.hpp"
+// #include "Climber.hpp" Climber is broken as of Spring 2022
 
 /******************************************************************/
 /*                   Public Function Definitions                  */
 /******************************************************************/
 void Robot::RobotInit()
 {
-  Climber::init();
+  // Climber::init();
 }
 void Robot::RobotPeriodic() {}
 
@@ -22,6 +22,8 @@ void Robot::AutonomousInit()
   using namespace std::literals::chrono_literals;
   std::this_thread::sleep_for(6s);
   drivetrain.tank(0, 0);
+
+  //Drives backwards at 30% speed for 6 seconds, then stops
 }
 void Robot::AutonomousPeriodic() {}
 
@@ -37,7 +39,7 @@ void Robot::TeleopPeriodic()
 
   drivetrain.tank(left, right);
   //Climber::printStatus();
-  Climber::ButtonManager();
+  // Climber::ButtonManager();
   // drivetrain.printStatus();
 }
 
@@ -50,8 +52,8 @@ void Robot::DisabledPeriodic()
 void Robot::TestInit() {}
 void Robot::TestPeriodic()
 {
-  Climber::printStatus();
-  Climber::joystickControlNoLimits(BUTTON::JOY2.GetY());
+  // Climber::printStatus();
+  // Climber::joystickControlNoLimits(BUTTON::JOY2.GetY());
 }
 
 /******************************************************************/
