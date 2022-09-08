@@ -14,9 +14,11 @@ Drivetrain::Drivetrain()
 
     auto const talon_config = []() {
         TalonSRXConfiguration talon_config;
-        talon_config.closedloopRamp = .2;
+        talon_config.closedloopRamp = .2; // Sets a nice voltage curve to make the robot less jerky
         return talon_config;
     }();
+
+    // Sets the configuration on each motor
     fl.ConfigAllSettings(talon_config);
     bl.ConfigAllSettings(talon_config);
     fr.ConfigAllSettings(talon_config);
@@ -25,11 +27,13 @@ Drivetrain::Drivetrain()
 
 [[nodiscard]] double Drivetrain::getVoltage()
 {
+    // Takes the absolute value of the average
     return std::abs((fl.GetMotorOutputVoltage() - fr.GetMotorOutputVoltage()) / 2.0);
 }
 
 [[nodiscard]] double Drivetrain::getCurrent()
 {
+    // Takes the absolute value of the average
     return std::abs((fl.GetStatorCurrent() - fr.GetStatorCurrent()) / 2.0);
 }
 
@@ -44,10 +48,10 @@ void Drivetrain::printStatus()
 
 void Drivetrain::tank(double lrate, double rrate)
 {
-
+    // Sets each motor to "PercentOutput" mode (just -100% to 100% speed, no fancy software here), and then gives the % (from -1 to 1) at which the motors should run
     fl.Set(ControlMode::PercentOutput, lrate);
     bl.Set(ControlMode::PercentOutput, lrate);
-    fr.Set(ControlMode::PercentOutput, -rrate);
+    fr.Set(ControlMode::PercentOutput, -rrate); // The right side is inverted because the motors need to turn counter-clock wise instead of CW
     br.Set(ControlMode::PercentOutput, -rrate);
 
 /*

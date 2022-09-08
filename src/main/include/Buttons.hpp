@@ -26,13 +26,10 @@ public:
 /******************************************************************/
 namespace BUTTON
 {
-    inline frc::Joystick JOY1{0}, JOY2{1};
+    inline frc::Joystick JOY1{0};
 
-    namespace CLIMBER
-    {
-        inline JoystickButton RAISE{BUTTON::JOY2, 11};
-        inline JoystickButton LOWER{BUTTON::JOY1, 6};
-        inline JoystickButton ZERO1{BUTTON::JOY1, 8};
-        inline JoystickButton ZERO2{BUTTON::JOY1, 9};
-    } // namespace CLIMBER
+    inline JoystickButton TRIANGLE{BUTTON::JOY1, 4};
+    inline JoystickButton CIRCLE{BUTTON::JOY1, 3};
+    inline JoystickButton SQUARE{BUTTON::JOY1, 1};
+    inline JoystickButton X{BUTTON::JOY1, 2};
 } // namespace BUTTON

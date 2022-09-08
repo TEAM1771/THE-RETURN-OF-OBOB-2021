@@ -10,10 +10,13 @@
 /******************************************************************/
 /*                   Public Function Definitions                  */
 /******************************************************************/
-void Robot::RobotInit()
+
+Robot::Robot()
 {
-  // Climber::init();
+  BUTTON::JOY1.SetTwistChannel(5);
 }
+
+void Robot::RobotInit() {}
 void Robot::RobotPeriodic() {}
 
 void Robot::AutonomousInit()
@@ -23,38 +26,34 @@ void Robot::AutonomousInit()
   std::this_thread::sleep_for(6s);
   drivetrain.tank(0, 0);
 
-  //Drives backwards at 30% speed for 6 seconds, then stops
+  // Drives backwards at 30% speed for 6 seconds, then stops
 }
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic()
 {
-  // if (BUTTON::CLIMBER::RAISE)
-  //   Climber::joystickControl(BUTTON::JOY2.GetY());
-  // else
-  // Climber::joystickControl(0);
-  double const left = BUTTON::JOY1.GetY();
-  double const right = BUTTON::JOY2.GetY();
+  // double const left = BUTTON::JOY1.GetY();
+  // double const right = BUTTON::JOY1.GetTwist();
 
-  drivetrain.tank(left, right);
-  //Climber::printStatus();
-  // Climber::ButtonManager();
+  // drivetrain.tank(left, right);
   // drivetrain.printStatus();
+
+  if(BUTTON::TRIANGLE)
+  {
+    drivetrain.tank(1,1);
+  }
+  else
+  {
+    drivetrain.tank(0,0);
+  }
 }
 
 void Robot::DisabledInit() {}
-void Robot::DisabledPeriodic()
-{
-  // Climber::printStatus();
-}
+void Robot::DisabledPeriodic() {}
 
 void Robot::TestInit() {}
-void Robot::TestPeriodic()
-{
-  // Climber::printStatus();
-  // Climber::joystickControlNoLimits(BUTTON::JOY2.GetY());
-}
+void Robot::TestPeriodic() {}
 
 /******************************************************************/
 /*                  Private Function Definitions                  */

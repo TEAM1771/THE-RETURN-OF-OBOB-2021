@@ -3,7 +3,8 @@
 #include <ctre/Phoenix.h>
 #include <frc/Solenoid.h>
 
-//Drivetrain is a class to avoid issues with early initialization
+// Drivetrain has been made a class to avoid issues with early initialization
+// Classes are only initalized when they are created, which happens after WPILIB is loaded
 
 /******************************************************************/
 /*                       Private Constants                        */
