@@ -17,6 +17,9 @@ public:
   /******************************************************************/
   /*                   Public Function Declarations                 */
   /******************************************************************/
+
+  Robot();
+
   void RobotInit() override;
   void RobotPeriodic() override;
 
